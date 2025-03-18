@@ -1,29 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Yemeni</title>
-  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="input.css">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css">
+  <link rel="stylesheet" href="src/input.css">
   <link rel="stylesheet" href="./node_modules/apexcharts/dist/apexcharts.css" />
-  <script>
-    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  </script>
 
 </head>
 
-<body>
+<body class="bg-white dark:bg-gray-900">
   <!--NavBar Start-->
   <nav class="bg-white border-gray-200 dark:bg-gray-900">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+      <a href="./index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
         <img src="/assests/" class="h-8" alt="Logo" />
         <span class="text-blue-700 self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Ard
           Aljanatain</span>
@@ -81,16 +74,20 @@
         <ul
           class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
           <li>
-            <a href="#"
+            <a href="index.html"
               class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
               aria-current="page">Home</a>
           </li>
           <li>
-            <a href="#"
+            <a href="pages/products.html"
+              class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Products</a>
+          </li>
+          <li>
+            <a href="pages/about.html"
               class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</a>
           </li>
           <li>
-            <a href="#"
+            <a href="pages/services.html"
               class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Services</a>
           </li>
         </ul>
@@ -99,7 +96,7 @@
   </nav>
   <!--NavBar End-->
   <!-- Section with Background Image -->
-  <section class="bg-center bg-no-repeat bg-gray-700 bg-blend-multiply relative"
+  <section class="bg-center bg-no-repeat bg-gray-100 dark:bg-gray-400 bg-blend-multiply relative"
     style="background-image: url(assets/socatra.jpg);">
     <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
       <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-blue-900 md:text-5xl lg:text-6xl">
@@ -119,14 +116,14 @@
     <div class="flex flex-row justify-end pr-10 -mt-32 relative z-10">
       <div
         class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-        <a href="#">
+        <a href="pages/products.html">
           <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Products</h5>
         </a>
         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">At Ard Aljanatain, we specialize in delivering
           premium frozen seafood, succulent meats, and a wide range of high-quality frozen products, sourced globally
           to
           bring the finest flavors to your table</p>
-        <a href="#"
+        <a href="pages/products.html"
           class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           Read more
           <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -143,58 +140,85 @@
   <script>
     window.addEventListener("load", () => {
       ; (function () {
-        buildChart("#apex-multiple-area-charts-compare-alt", mode => ({
+        const isDarkMode = document.documentElement.classList.contains("dark");
+
+        // Define colors for light and dark themes using hex codes
+        const colors = {
+          light: {
+            series1: "#234B68", // Dark blue
+            series2: "#838381", // Gray
+            grid: "#E5E7EB", // Light gray for grid
+            text: "#374151", // Dark gray for text
+          },
+          dark: {
+            series1: "#4A90E2", // Lighter blue for dark theme
+            series2: "#A0A0A0", // Lighter gray for dark theme
+            grid: "#4B5563", // Dark gray for grid
+            text: "#D1D5DB", // Light gray for text
+          },
+        };
+
+        const currentColors = isDarkMode ? colors.dark : colors.light;
+
+        buildChart("#apex-multiple-area-charts-compare-alt", (mode) => ({
           chart: {
             height: 400,
             type: "area",
             toolbar: {
-              show: false
+              show: false,
             },
             zoom: {
-              enabled: false
-            }
+              enabled: false,
+            },
+            foreColor: currentColors.text, // Set text color based on theme
           },
           series: [
             {
               name: "2024",
-              data: [20000, 40000, 60000, 30000, 40000, 100000, 70000, 90000, 70000, 65000, 90000, 100000]
+              data: [
+                2000, 4000, 6000, 3000, 4000, 1000, 7000, 900, 700,
+                650, 9000, 100,
+              ],
             },
             {
               name: "2023",
-              data: [7000, 18000, 20000, 40000, 27000, 50000, 19000, 99000, 32000, 70000, 42000, 50000]
-            }
+              data: [
+                700, 1800, 2000, 400, 2700, 3000, 1900, 9000, 3040,
+                7000, 4200, 5000,
+              ],
+            },
           ],
           legend: {
             show: true,
             position: "top",
             horizontalAlign: "right",
             labels: {
-              useSeriesColors: true
+              useSeriesColors: true,
             },
             markers: {
-              offsetY: 2
-            }
+              offsetY: 2,
+            },
           },
           dataLabels: {
-            enabled: false
+            enabled: false,
           },
           stroke: {
             curve: "straight",
-            width: 2
+            width: 2,
           },
           grid: {
             strokeDashArray: 2,
-            borderColor: "oklch(var(--bc) / 0.4)"
+            borderColor: currentColors.grid, // Set grid color based on theme
           },
-          colors: ["#234B68", "#838381"],
+          colors: [currentColors.series1, currentColors.series2], // Set series colors based on theme
           fill: {
             gradient: {
               shadeIntensity: 1,
               opacityFrom: 0.7,
-              gradientToColors: ["oklch(var(--b1))"],
+              gradientToColors: ["#F3F4F6"], // Light gray for gradient
               opacityTo: 0.3,
-              stops: [0, 90, 100]
-            }
+              stops: [0, 90, 100],
+            },
           },
           xaxis: {
             type: "category",
@@ -211,42 +235,42 @@
               "1 September",
               "1 October",
               "1 November",
-              "1 December"
+              "1 December",
             ],
             axisBorder: {
-              show: false
+              show: false,
             },
             axisTicks: {
-              show: false
+              show: false,
             },
             crosshairs: {
               stroke: {
-                dashArray: 0
+                dashArray: 0,
               },
               dropShadow: {
-                show: false
-              }
+                show: false,
+              },
             },
             tooltip: {
-              enabled: false
+              enabled: false,
             },
             labels: {
               style: {
-                colors: "oklch(var(--bc) / 0.9)",
+                colors: currentColors.text, // Set x-axis label color based on theme
                 fontSize: "12px",
-                fontWeight: 400
+                fontWeight: 400,
               },
-              formatter: title => {
-                let t = title
+              formatter: (title) => {
+                let t = title;
 
                 if (t) {
-                  const newT = t.split(" ")
-                  t = `${newT[1].slice(0, 3)}`
+                  const newT = t.split(" ");
+                  t = `${newT[1].slice(0, 3)}`;
                 }
 
-                return t
-              }
-            }
+                return t;
+              },
+            },
           },
           yaxis: {
             labels: {
@@ -254,19 +278,21 @@
               minWidth: 0,
               maxWidth: 140,
               style: {
-                colors: "oklch(var(--bc) / 0.9)",
+                colors: currentColors.text, // Set y-axis label color based on theme
                 fontSize: "12px",
-                fontWeight: 400
+                fontWeight: 400,
               },
-              formatter: value => (value >= 1000 ? `${value / 1000}k` : value)
-            }
+              formatter: (value) =>
+                value >= 1000 ? `${value / 1000}k` : value,
+            },
           },
           tooltip: {
             x: {
-              format: "MMMM yyyy"
+              format: "MMMM yyyy",
             },
             y: {
-              formatter: value => `$${value >= 1000 ? `${value / 1000}k` : value}`
+              formatter: (value) =>
+                `$${value >= 1000 ? `${value / 1000}k` : value}`,
             },
             custom: function (props) {
               return buildTooltipCompareTwoAlt(props, {
@@ -275,24 +301,24 @@
                 valuePrefix: "$",
                 hasTextLabel: true,
                 wrapperExtClasses: "",
-                markerExtClasses: ""
-              })
-            }
+                markerExtClasses: "",
+              });
+            },
           },
           responsive: [
             {
               breakpoint: 568,
               options: {
                 chart: {
-                  height: 300
+                  height: 300,
                 },
                 labels: {
                   style: {
-                    colors: 'oklch(var(--bc) / 0.9)',
-                    fontSize: "10px"
+                    colors: currentColors.text, // Set responsive label color based on theme
+                    fontSize: "10px",
                   },
                   offsetX: -2,
-                  formatter: title => title.slice(0, 3)
+                  formatter: (title) => title.slice(0, 3),
                 },
                 yaxis: {
                   labels: {
@@ -300,74 +326,82 @@
                     minWidth: 0,
                     maxWidth: 140,
                     style: {
-                      colors: 'oklch(var(--bc) / 0.9)',
-                      fontSize: "10px"
+                      colors: currentColors.text, // Set responsive y-axis label color based on theme
+                      fontSize: "10px",
                     },
-                    formatter: value => (value >= 1000 ? `${value / 1000}k` : value)
-                  }
-                }
-              }
-            }
-          ]
-        }))
-      })()
-    })
+                    formatter: (value) =>
+                      value >= 1000 ? `${value / 1000}k` : value,
+                  },
+                },
+              },
+            },
+          ],
+        }));
+      })();
+    });
   </script>
   <div id="apex-multiple-area-charts-compare-alt" class="w-full"></div>
   <!--Footer Start-->
-  <div class="px-4 pt-16 mx-auto sm:max-w-xl md:max-w-full md:px-24 lg:px-8">
+  <div class="px-4 pt-16 mx-auto sm:max-w-xl md:max-w-full md:px-24 lg:px-8 bg-white dark:bg-blue-900/"
+    style="background-color: #234B68;">
     <div class="grid gap-10 row-gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-4">
       <div class="sm:col-span-2">
         <a href="/" aria-label="Go home" title="Company" class="inline-flex items-center">
           <svg class="w-8 text-deep-purple-accent-400" viewBox="0 0 24 24" stroke-linejoin="round" stroke-width="2"
             stroke-linecap="round" stroke-miterlimit="10" stroke="currentColor" fill="none">
-
           </svg>
           <img src="/assests/" class="h-8" alt="Logo" />
-          <span class="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">ArdAljanatain</span>
+          <span
+            class="ml-2 text-xl font-bold tracking-wide text-gray-800 dark:text-white uppercase">ArdAljanatain</span>
         </a>
         <div class="mt-6 lg:max-w-sm">
-          <p class="text-sm text-gray-800">
+          <p class="text-sm text-gray-800 dark:text-gray-300">
             Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
             aperiam.
           </p>
-          <p class="mt-4 text-sm text-gray-800">
+          <p class="mt-4 text-sm text-gray-800 dark:text-gray-300">
             Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
           </p>
         </div>
       </div>
       <div class="space-y-2 text-sm">
-        <p class="text-base font-bold tracking-wide text-gray-900">Contacts</p>
+        <p class="text-base font-bold tracking-wide text-gray-900 dark:text-white">Contacts</p>
         <div class="flex">
-          <p class="mr-1 text-gray-800">Phone:</p>
-          <a href="tel:850-123-5021" aria-label="Our phone" title="Our phone"
-            class="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800">+962-796637812</a>
+          <p class="mr-1 text-gray-800 dark:text-gray-300">Phone:</p>
+          <a href="tel:+962-7-9663-7812" aria-label="Our phone" title="Our phone"
+            class="transition-colors duration-300 texts-purple-accent-400 hover:text-purple-800 dark:hover:text-purple-300">
+            +962-796637812
+          </a>
         </div>
         <div class="flex">
-          <p class="mr-1 text-gray-800">Email:</p>
+          <p class="mr-1 text-gray-800 dark:text-gray-300">Email:</p>
           <a href="mailto:info@lorem.mail" aria-label="Our email" title="Our email"
-            class="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800">ardaljanatain1960@gmail.mail</a>
+            class="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800 dark:hover:text-deep-purple-300">
+            ardaljanatain1960@gmail.mail
+          </a>
         </div>
         <div class="flex">
-          <p class="mr-1 text-gray-800">Address:</p>
+          <p class="mr-1 text-gray-800 dark:text-gray-300">Address:</p>
           <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" aria-label="Our address"
             title="Our address"
-            class="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800">
+            class="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800 dark:hover:text-deep-purple-300">
             North Marka, Amman
           </a>
         </div>
       </div>
       <div>
-        <span class="text-base font-bold tracking-wide text-gray-900">Social</span>
+        <span class="text-base font-bold tracking-wide text-gray-900 dark:text-white">Social</span>
         <div class="flex items-center mt-1 space-x-3">
-          <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-400">
+          <a href="/"
+            class="text-gray-500 dark:text-gray-400 transition-colors duration-300 hover:text-deep-purple-accent-400">
             <svg viewBox="0 0 24 24" fill="currentColor" class="h-5">
               <path
                 d="M24,4.6c-0.9,0.4-1.8,0.7-2.8,0.8c1-0.6,1.8-1.6,2.2-2.7c-1,0.6-2,1-3.1,1.2c-0.9-1-2.2-1.6-3.6-1.6 c-2.7,0-4.9,2.2-4.9,4.9c0,0.4,0,0.8,0.1,1.1C7.7,8.1,4.1,6.1,1.7,3.1C1.2,3.9,1,4.7,1,5.6c0,1.7,0.9,3.2,2.2,4.1 C2.4,9.7,1.6,9.5,1,9.1c0,0,0,0,0,0.1c0,2.4,1.7,4.4,3.9,4.8c-0.4,0.1-0.8,0.2-1.3,0.2c-0.3,0-0.6,0-0.9-0.1c0.6,2,2.4,3.4,4.6,3.4 c-1.7,1.3-3.8,2.1-6.1,2.1c-0.4,0-0.8,0-1.2-0.1c2.2,1.4,4.8,2.2,7.5,2.2c9.1,0,14-7.5,14-14c0-0.2,0-0.4,0-0.6 C22.5,6.4,23.3,5.5,24,4.6z">
               </path>
             </svg>
           </a>
-          <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-400">
+          <a href="/"
+            class="text-gray-500 dark:text-gray-400 transition-colors duration-300 hover:text-deep-purple-accent-400">
             <svg viewBox="0 0 30 30" fill="currentColor" class="h-6">
               <circle cx="15" cy="15" r="4"></circle>
               <path
@@ -375,7 +409,8 @@
               </path>
             </svg>
           </a>
-          <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-400">
+          <a href="/"
+            class="text-gray-500 dark:text-gray-400 transition-colors duration-300 hover:text-deep-purple-accent-400">
             <svg viewBox="0 0 24 24" fill="currentColor" class="h-5">
               <path
                 d="M22,0H2C0.895,0,0,0.895,0,2v20c0,1.105,0.895,2,2,2h11v-9h-3v-4h3V8.413c0-3.1,1.893-4.788,4.659-4.788 c1.325,0,2.463,0.099,2.795,0.143v3.24l-1.918,0.001c-1.504,0-1.795,0.715-1.795,1.763V11h4.44l-1,4h-3.44v9H22c1.105,0,2-0.895,2-2 V2C24,0.895,23.105,0,22,0z">
@@ -383,28 +418,31 @@
             </svg>
           </a>
         </div>
-        <p class="mt-4 text-sm text-gray-500">
+        <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">
           Follow us on social media for the latest updates, offers, and a glimpse into our world of premium frozen
-          seafood and meats! </p>
+          seafood and meats!
+        </p>
       </div>
     </div>
-    <div class="flex flex-col-reverse justify-between pt-5 pb-10 border-t lg:flex-row">
-      <p class="text-sm text-gray-600">
+    <div
+      class="flex flex-col-reverse justify-between pt-5 pb-10 border-t lg:flex-row border-gray-200 dark:border-gray-700">
+      <p class="text-sm text-gray-600 dark:text-gray-400">
         © Copyright 2025 ArdAljanatain Co. All rights reserved.
       </p>
       <ul class="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row">
         <li>
-          <a href="/"
-            class="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400">F.A.Q</a>
+          <a href="contactUS.html"
+            class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300 hover:text-deep-purple-accent-400">F.A.Q</a>
         </li>
         <li>
-          <a href="/"
-            class="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400">Privacy
+          <a href="Privacy&Policy.html"
+            class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300 hover:text-deep-purple-accent-400">Privacy
             Policy</a>
         </li>
         <li>
           <a href="/"
-            class="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400">Terms &
+            class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300 hover:text-deep-purple-accent-400">Terms
+            &
             Conditions</a>
         </li>
       </ul>
